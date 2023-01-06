@@ -6,13 +6,20 @@ fn main() -> Result<()> {
     // `Module` which is attached to a `Store` cache. After we've got that we
     // can instantiate it.
     let mut store = Store::<()>::default();
-    let module = Module::from_file(store.engine(), "examples/gcd.wat")?;
+    let module = Module::from_file(store.engine(), "examples/sum.wat")?;
     let instance = Instance::new(&mut store, &module, &[])?;
 
-    // Invoke `gcd` export
-    let gcd = instance.get_typed_func::<(i32, i32), i32>(&mut store, "gcd")?;
+    let f = instance.get_typed_func::<i32, i32>(&mut store, "sum")?;
 
-    println!("gcd(6, 27) = {}", gcd.call(&mut store, (6, 27))?);
+    println!("{}", f.call(store, 10000).unwrap());
+
+    // i: i32 = 1
+    // s: i32 = 0
+    // while i <= 10:
+    //  s = s + i
+    //  i = i + 1
+    // return s
+
     Ok(())
 }
 
