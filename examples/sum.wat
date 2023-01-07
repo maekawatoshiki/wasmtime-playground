@@ -2,12 +2,13 @@
   (func $sum (param $x i32) (result i32)
     (local $s i32)
     (local $i i32)
-    block
-      i32.const 0
-      local.set $s
-      i32.const 1
-      local.set $i
 
+    i32.const 0
+    local.set $s
+    i32.const 1
+    local.set $i
+
+    block
       loop
         local.get $i
         local.get $x
@@ -27,6 +28,7 @@
         br 0
       end
     end
+
     local.get $s
   )
   (export "sum" (func $sum))
